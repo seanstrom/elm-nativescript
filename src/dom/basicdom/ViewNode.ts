@@ -44,6 +44,10 @@ export default class ViewNode {
         delete this._attributes[name];
     }
 
+    get attributes() {
+        return this._attributes
+    }
+
     /* istanbul ignore next */
     toString() {
         return `${this.constructor.name}(${this.tagName})`
@@ -103,6 +107,12 @@ export default class ViewNode {
     onInsertedChild(childNode: ViewNode, index: number) { }
 
     onRemovedChild(childNode: ViewNode) { }
+
+    replaceChild(newNode: ViewNode, oldNode: ViewNode) {
+        this.insertBefore(newNode, oldNode)
+        this.removeChild(oldNode)
+        return oldNode
+    }
 
     insertBefore(childNode: ViewNode, referenceNode: ViewNode) {
         log.debug(() => `insert before ${this} ${childNode} ${referenceNode}`)

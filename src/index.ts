@@ -8,6 +8,32 @@ global.__onLiveSyncCore = () => {
     Application.getRootView()?._onCssStateChange();
 };
 
+export function svelteNativeNoFrameCallback(render: any, data: any): Promise<SvelteComponent> {
+    return new Promise((resolve, reject) => {
+
+        let elementInstance: SvelteComponent;
+
+        const buildElement = () => {
+            let frag = createElement('fragment', window.document as unknown as DocumentNode);
+            let innerFrag = createElement('fragment', window.document as unknown as DocumentNode);
+            frag.appendChild(innerFrag)
+            render(frag.firstChild)
+            return (frag.firstChild as NativeElementNode<View>).nativeElement;
+        }
+
+        //wait for launch before returning
+        Application.on(Application.launchEvent, () => {
+            resolve(elementInstance);
+        })
+
+        try {
+            Application.run({ create: buildElement });
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
 export function svelteNativeNoFrame<T>(rootElement: typeof SvelteComponent<T>, data: T): Promise<SvelteComponent<T>> {
     return new Promise((resolve, reject) => {
 
