@@ -1,6 +1,6 @@
 {
-  "name": "svelte-native",
-  "version": "1.0.19",
+  "name": "elm-nativescript",
+  "version": "0.0.2",
   "description": "Svelte integration for NativeScript",
   "private": true,
   "repository": {
@@ -22,7 +22,7 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "@nativescript/core": "~8.5.9",
+    "@nativescript/core": "~8.6.0",
     "svelte": "~4.2.8"
   },
   "devDependencies": {
